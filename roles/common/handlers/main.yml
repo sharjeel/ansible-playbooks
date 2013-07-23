@@ -1,0 +1,13 @@
+
+---
+ - name: ohmyzsh installed
+   sudo: no
+   shell: cp -n ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+
+ - name: setup dotfiles
+   sudo: no
+   shell: cd ~/.personalconfig/ && ansible-playbook -i hosts ansible-dotfiles.yml
+
+ - name: bashmarks updated
+   sudo: no 
+   shell: cd ~/tmp/bashmarks && make install
