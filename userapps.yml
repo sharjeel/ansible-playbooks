@@ -1,7 +1,5 @@
 ---
  - name: Install user apps
    hosts: all
-
    roles:
      - common
-

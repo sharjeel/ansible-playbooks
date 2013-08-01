@@ -32,7 +32,9 @@
         ohmyzsh installed
 
  - name: Set zsh as default shell
-   user: name=$user shell=/bin/zsh
+   user: name=$ansible_ssh_user shell=/bin/zsh
+   tags: 
+    - shell
 
  - name: Create temp directory
    sudo: no
