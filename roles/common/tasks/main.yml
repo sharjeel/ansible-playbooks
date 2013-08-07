@@ -20,7 +20,7 @@
     - emacs24
     - python-pip 
     - python-dev 
-    - build-essential 
+    - build-essential   
 
  - name: install ansible
    pip: name=ansible
@@ -57,4 +57,19 @@
    sudo: no
    shell: ansible-playbook ~/.personalconfig/ansible-dotfiles.yml -i ~/.personalconfig/localhost 
    tags: [persconf]
+
+ - name: Copy over emacs batch script for installing 
+   sudo: no
+   template: src=emacs.script.el dest=~/tmp/emacs.script.el
+   tags: [persconf, emacs]
+
+ - name: Install emacs packages
+   sudo: no
+   shell: emacs --batch -l ~/tmp/emacs.script.el
+   tags: [pesrconf, emacs]
+
+ - name: Clean over installation file
+   sudo: no
+   file: path=~/tmp/emacs.script.el state=absent
+   tags: [pesrconf, emacs]
 
