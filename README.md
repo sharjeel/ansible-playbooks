@@ -15,5 +15,5 @@ The other playbook `ubuntu.yml` is for servers.
 
 ### Quick reference to pre-reqs on installation a fresh ubuntu machine
 
-	sudo apt-get update && sudo apt-get install python-pip
+	sudo apt-get update && sudo apt-get install git python-pip
 	sudo pip install ansible
