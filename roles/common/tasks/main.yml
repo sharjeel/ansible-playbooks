@@ -35,9 +35,9 @@
    user: name=$ansible_ssh_user shell=/bin/zsh
    tags: [shell]
 
- - name: Create temp directory
+ - name: Create temp and bin directories in home
    sudo: no
-   shell: mkdir -p ~/tmp/
+   shell: mkdir -p ~/tmp/ ~/bin/
    tags: [persconf]
 
  - name: Install bashmarks
