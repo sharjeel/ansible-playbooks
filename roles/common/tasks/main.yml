@@ -1,18 +1,8 @@
 ---
- - name: add the emacs24 PPA
-   apt_repository: repo=ppa:cassou/emacs
-   sudo: yes
-   tags: [editors]
-
- - name: apt update
-   sudo: yes
-   apt: update_cache=yes
-
  - name: install emacs24, git, zsh, gcc, gnu-make,
-   apt: pkg=emacs24 state=installed 
+   apt: pkg={{ item }} state=latest
    sudo : yes
    tags: [utilapps]
-   apt: pkg={{ item }} state=latest
    with_items:
     - git
     - zsh
@@ -32,6 +22,7 @@
         ohmyzsh installed
 
  - name: Set zsh as default shell
+   sudo: yes
    user: name=$ansible_ssh_user shell=/bin/zsh
    tags: [shell]
 
@@ -65,7 +56,7 @@
 
  - name: Install emacs packages
    sudo: no
-   shell: emacs --batch -l ~/tmp/emacs.script.el
+   shell: emacs --script ~/tmp/emacs.script.el
    tags: [pesrconf, emacs]
 
  - name: Clean over installation file
