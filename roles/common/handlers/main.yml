@@ -8,6 +8,3 @@
    sudo: no
    shell: cd ~/.personalconfig/ && ansible-playbook -i hosts ansible-dotfiles.yml
 
- - name: bashmarks updated
-   sudo: no 
-   shell: cd ~/tmp/bashmarks && make install

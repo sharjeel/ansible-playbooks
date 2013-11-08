@@ -23,7 +23,7 @@
 
  - name: Set zsh as default shell
    sudo: yes
-   user: name=$ansible_ssh_user shell=/bin/zsh
+   user: name={{ ansible_ssh_user }} shell=/bin/zsh
    tags: [shell]
 
  - name: Create temp and bin directories in home
@@ -31,11 +31,15 @@
    shell: mkdir -p ~/tmp/ ~/bin/
    tags: [persconf]
 
- - name: Install bashmarks
+ - name: Checkout bashmarks
    sudo: no
    git: repo=https://github.com/sharjeel/bashmarks.git dest=~/tmp/bashmarks update=yes
-   notify: bashmarks updated
-   tags: [persconf]
+   tags: [persconf, bashmarks]
+
+ - name: Install bashmarks
+   sudo: no 
+   shell: cd ~/tmp/bashmarks && make install
+   tags: [persconf, bashmarks]
 
  - name: Checkout personalized dotfiles
    sudo: no
@@ -56,11 +60,11 @@
 
  - name: Install emacs packages
    sudo: no
-   shell: emacs --script ~/tmp/emacs.script.el
-   tags: [pesrconf, emacs]
+   shell: emacs --script ~/tmp/emacs.script.el | head -1
+   tags: [persconf, emacs]
 
  - name: Clean over installation file
    sudo: no
    file: path=~/tmp/emacs.script.el state=absent
-   tags: [pesrconf, emacs]
+   tags: [persconf, emacs]
 
