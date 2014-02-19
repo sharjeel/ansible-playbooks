@@ -8,9 +8,10 @@
     - zsh
     - git-core
     - emacs24
-    - python-pip 
-    - python-dev 
-    - build-essential   
+    - python-pip
+    - python-dev
+    - ack-grep
+    - build-essential
 
  - name: install ansible
    sudo: yes
