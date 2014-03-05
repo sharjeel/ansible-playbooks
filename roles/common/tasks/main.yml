@@ -13,9 +13,14 @@
     - ack-grep
     - build-essential
 
- - name: install ansible
+ - name: install/update ansible and other python packages
    sudo: yes
-   pip: name=ansible
+   pip: name={{ item }} state=latest
+   tags: [pythonpackages]
+   with_items:
+    - ansible
+    - requests
+    - ipython
 
  - name: Check-out oh-my-zsh 
    sudo: no
