@@ -1,7 +1,7 @@
 ---
  - name: install emacs24, git, zsh, gcc, gnu-make,
    apt: pkg={{ item }} state=latest
-   sudo : yes
+   sudo: yes
    tags: [utilapps]
    with_items:
     - git
@@ -10,10 +10,17 @@
     - emacs24
     - python-pip 
     - python-dev 
-    - build-essential   
+    - build-essential
+    - tmux
+    - guake
 
- - name: install ansible
-   pip: name=ansible
+ - name: install ansible, ipython
+   sudo: yes
+   pip: name={{ item }} state=latest
+   tags: [utilapps,pip]
+   with_items:
+    - ansbile
+    - ipython
 
  - name: Check-out oh-my-zsh 
    sudo: no
