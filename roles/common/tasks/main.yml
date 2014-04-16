@@ -8,18 +8,20 @@
     - zsh
     - git-core
     - emacs24
-    - python-pip 
-    - python-dev 
+    - python-pip
+    - python-dev
+    - ack-grep
     - build-essential
     - tmux
     - guake
 
- - name: install ansible, ipython
+ - name: install/update ansible and other python packages
    sudo: yes
    pip: name={{ item }} state=latest
-   tags: [utilapps,pip]
+   tags: [pythonpackages,utilapps,pip]
    with_items:
-    - ansbile
+    - ansible
+    - requests
     - ipython
 
  - name: Check-out oh-my-zsh 
