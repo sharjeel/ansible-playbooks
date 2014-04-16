@@ -25,13 +25,29 @@
  - name: Check-out oh-my-zsh 
    sudo: no
    git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=~/.oh-my-zsh update=yes
-   notify:
-        ohmyzsh installed
+   notify: ohmyzsh installed
+   tags: [zsh,zshaddon]
 
+ - name: Install zsh-syntaxhighlight
+   sudo: no
+   git: repo=git://github.com/zsh-users/zsh-syntax-highlighting.git dest=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+   tags: [zsh,zshaddon]
+   
+ - name: Install zsh-autosuggestions
+   sudo: no
+   git: repo=https://github.com/tarruda/zsh-autosuggestions dest=~/.zsh-autosuggestions update=yes
+   tags: [zsh,zshaddon]
+
+ - name: Enable zsh-autusuggestion plugin
+   sudo: no
+   lineinfile: dest=~/.zshrc state=present create=yes insertbefore='source.*oh-my-zsh\.sh'
+                  regexp='^plugins=\(.*\)' line="plugins=(git zsh-syntax-highlighting)" create=yes
+   tags: [zsh,zshaddon]
+   
  - name: Set zsh as default shell
    sudo: yes
    user: name={{ ansible_ssh_user }} shell=/bin/zsh
-   tags: [shell]
+   tags: [zsh]
 
  - name: Create temp and bin directories in home
    sudo: no
