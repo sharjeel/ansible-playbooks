@@ -4,6 +4,7 @@
 	starter-kit
         monokai-theme
         solarized-theme
+        ack
 	))
 
 (require 'package)
