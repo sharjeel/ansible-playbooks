@@ -5,6 +5,8 @@
         monokai-theme
         solarized-theme
         ack
+        multi-term
+        projectile
 	))
 
 (require 'package)
