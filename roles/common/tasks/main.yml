@@ -23,6 +23,7 @@
    with_items:
     - ansible
     - requests
+    - httpie
     - ipython
 
  - name: Check-out oh-my-zsh 
