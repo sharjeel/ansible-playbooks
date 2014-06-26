@@ -15,6 +15,7 @@
     - tmux
     - guake
     - colordiff
+    - clipit
 
  - name: install/update ansible and other python packages
    sudo: yes
