@@ -1,0 +1,25 @@
+---
+ - name: Ubuntu specific packages
+   apt: pkg={{ item }} state=latest
+   sudo: yes
+   tags: [utilapps, debian]
+   with_items:
+    - git
+    - zsh
+    - git-core
+    - emacs24
+    - python-pip
+    - python-dev
+    - ack-grep
+    - build-essential
+    - tmux
+    - guake
+    - colordiff
+    - clipit
+   when: ansible_os_family == "Debian"
+
+ - name: Set zsh as default shell
+   sudo: yes
+   user: name={{ ansible_ssh_user }} shell=/bin/zsh
+   tags: [zsh, debian]
+   when: ansible_os_family == "Debian"

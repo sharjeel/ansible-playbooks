@@ -1,0 +1,16 @@
+---
+ - name: OSX specific packages
+   macports: name={{ item }} state=present 
+   with_items:
+    - zsh
+    - emacs
+    - ack
+    - tmux
+   tags: [uitlapps, darwin]
+   when: ansible_os_family == "Darwin"
+
+ - name: Set ZSH as default shell
+   sudo: yes
+   shell: chsh -s /bin/zsh sharjeel
+   tags: [zsh, darwin]
+   when: ansible_os_family == "Darwin"
