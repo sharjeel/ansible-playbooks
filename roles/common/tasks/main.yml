@@ -5,6 +5,9 @@
  - include: debian.yml
    when: ansible_os_family == "Debian"
 
+ - include: freebsd.yml
+   when: ansible_os_family == "FreeBSD"
+
  - name: install/update ansible and other python packages
    sudo: yes
    pip: name={{ item }} state=latest

@@ -1,0 +1,23 @@
+---
+ - name: FreeBSD specific packages
+   pkgng: name={{ item }} state=present
+   sudo: yes
+   tags: [utilapps, pcbsd]
+   with_items:
+    - git
+    - zsh
+    - emacs24
+    - py27-pip
+    - ack
+    - tmux
+    - guake
+    - yakuake
+    - colordiff
+    - clipit
+   when: ansible_os_family == "FreeBSD"
+
+ - name: Set zsh as default shell
+   sudo: yes
+   user: name={{ ansible_ssh_user }} shell=/usr/local/bin/zsh
+   tags: [zsh, pcbsd]
+   when: ansible_os_family == "FreeBSD"
