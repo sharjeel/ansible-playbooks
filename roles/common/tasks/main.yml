@@ -16,10 +16,14 @@
    pip: name={{ item }} state=latest
    tags: [pythonpackages,utilapps,pip]
    with_items:
+    - pip
     - ansible
     - requests
     - httpie
     - ipython
+    - pyzmq
+    - zmq
+    - jsonfetch
 
  - name: Check-out oh-my-zsh 
    sudo: no
