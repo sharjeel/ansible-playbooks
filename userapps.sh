@@ -7,7 +7,7 @@ which pkg
 PKG=$?
 
 if [ $APT_GET -eq 0 ];then
-  apt-get update && sudo apt-get install git python-pip python-dev
+  apt-get update && apt-get -y install git python-pip python-dev
 elif  [ $PKG -eq 0 ]; then
   pkg update
   pkg install git python-pip python-dev
