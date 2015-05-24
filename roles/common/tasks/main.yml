@@ -24,6 +24,7 @@
     - zmq
     - jsonfetch
     - ipython
+    - tornado
 
  - name: Check-out oh-my-zsh 
    sudo: no
