@@ -20,10 +20,10 @@
     - ansible
     - requests
     - httpie
-    - ipython
     - pyzmq
     - zmq
     - jsonfetch
+    - ipython
 
  - name: Check-out oh-my-zsh 
    sudo: no
