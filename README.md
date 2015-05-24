@@ -13,7 +13,6 @@ Setting things up on localhost is as simple as
 The other playbook `ubuntu.yml` is for servers.
 
 
-### Quick reference to pre-reqs on installation a fresh ubuntu machine
+### Quick installation
 
-	sudo apt-get update && sudo apt-get install git python-pip python-dev
-	sudo pip install ansible
+	curl -L https://github.com/sharjeel/ansible-playbooks/raw/master/userapps.sh | sudo sh
