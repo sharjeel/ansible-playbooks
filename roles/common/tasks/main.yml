@@ -22,7 +22,7 @@
     - httpie
     - pyzmq
     - zmq
-    - jsonfetch
+    - jsonschema
     - ipython
     - tornado
 
