@@ -1,12 +1,13 @@
 ; Batch emacs script for installing starter kit and other packages
 (setq pkgs-to-install 
       '(
-	starter-kit
         monokai-theme
         solarized-theme
         ack
         multi-term
         projectile
+        js2-mode
+        slime
 	))
 
 (require 'package)
