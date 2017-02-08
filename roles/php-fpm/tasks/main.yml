@@ -1,7 +1,7 @@
 ---
 - name: Install php-fpm and deps 
   apt: pkg={{ item }} state=present
-  sudo: yes
+  become: true
   with_items:
     - php5
     - php5-fpm
@@ -10,11 +10,11 @@
 
 
 # - name: Disable default pool
-#   sudo: yes
+#   become: true
 #   command: mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.disabled creates=/etc/php-fpm.d/www.disabled
 #   notify: restart php-fpm
  
 # - name: Copy php-fpm configuration
 #   template: src=webserver.conf dest=/etc/php-fpm.d/
-#   sudo: yes
+#   become: true
 #   notify: restart php-fpm

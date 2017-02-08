@@ -1,10 +1,15 @@
 
 ---
- - name: ohmyzsh installed
-   sudo: no
+ - name: ohmyzsh copy rc
    shell: cp -n ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+   notify: ohmyzsh add sources
+
+ - name: ohmyzsh add sources
+   become: false
+   lineinfile: dest=~/.zshrc state=present create=yes insertafter='EOF'
+               regexp='^source.*oh-my-zsh\.sh' line="source $ZSH/oh-my-zsh.sh"
 
  - name: setup dotfiles
-   sudo: no
+   become: false
    shell: cd ~/.personalconfig/ && ansible-playbook -i hosts ansible-dotfiles.yml
 

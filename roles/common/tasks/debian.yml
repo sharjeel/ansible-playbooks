@@ -1,7 +1,7 @@
 ---
  - name: Ubuntu specific packages
    apt: pkg={{ item }} state=latest
-   sudo: yes
+   become: true
    tags: [utilapps, debian]
    with_items:
     - git
@@ -17,8 +17,21 @@
     - colordiff
     - clipit
 
+ - name: Ubuntu specific optional packages
+   apt: pkg={{ item }} state=latest
+   become: true
+   tags: [utilapps, debian]
+   ignore_errors: yes
+   with_items:
+    - libffi-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libjpeg8-dev
+    - zlib1g-dev
+
  - name: Set zsh as default shell
-   sudo: yes
+   become: true
    user: name={{ ansible_ssh_user }} shell=/bin/zsh
    tags: [zsh, debian]
 

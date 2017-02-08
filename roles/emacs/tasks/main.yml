@@ -1,5 +1,5 @@
 ---
     - name: add the emacs24 PPA
       apt_repository: repo=ppa:cassou/emacs
-      sudo: True
+      become: true
       tags: [packages]

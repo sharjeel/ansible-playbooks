@@ -1,7 +1,7 @@
 ---
  - name: Install nginx, php-fpm
    hosts: webservers
-   sudo: yes
+   become: true
 
    roles:
      - common

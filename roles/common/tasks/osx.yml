@@ -10,7 +10,7 @@
    when: ansible_os_family == "Darwin"
 
  - name: Set ZSH as default shell
-   sudo: yes
+   become: true
    shell: chsh -s /bin/zsh sharjeel
    tags: [zsh, darwin]
    when: ansible_os_family == "Darwin"

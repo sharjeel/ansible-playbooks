@@ -1,5 +1,5 @@
 ---
 - name: Install nginx
-  sudo: yes
+  become: true
   apt: pkg=nginx state=present
 
