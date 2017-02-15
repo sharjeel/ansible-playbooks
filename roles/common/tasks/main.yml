@@ -52,7 +52,7 @@
  - name: Enable zsh-autusuggestion plugin
    become: false
    lineinfile: dest=~/.zshrc state=present create=yes insertbefore='source.*oh-my-zsh\.sh'
-                  regexp='^plugins=\(.*\)' line="plugins=(git zsh-syntax-highlighting)"
+                  regexp='^plugins=\(.*\)' line="plugins=(git extract zsh-syntax-highlighting)"
    tags: [zsh,zshaddon]
    
  - name: Create temp and bin directories in home

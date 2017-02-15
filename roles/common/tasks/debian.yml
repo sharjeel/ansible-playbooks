@@ -16,6 +16,7 @@
     - guake
     - colordiff
     - clipit
+    - htop
 
  - name: Ubuntu specific optional packages
    apt: pkg={{ item }} state=latest
