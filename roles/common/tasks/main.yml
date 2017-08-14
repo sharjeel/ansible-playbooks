@@ -30,8 +30,12 @@
     - pyzmq
     - zmq
     - jsonschema
-    - ipython
     - tornado
+
+ - name: Install IPython LTS which supports Python 2.7
+   become: true
+   pip: name=ipython state=present version=5.4
+   tags: [pythonpackages,utilapps]
 
  - name: Check-out oh-my-zsh 
    become: false
