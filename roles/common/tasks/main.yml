@@ -31,6 +31,8 @@
     - zmq
     - jsonschema
     - tornado
+    - virtualenv
+    - virtualenvwrapper
 
  - name: Install IPython LTS which supports Python 2.7
    become: true
