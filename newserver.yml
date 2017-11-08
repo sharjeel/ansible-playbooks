@@ -1,0 +1,80 @@
+---
+ - name: Setup a newly created server running with root
+   hosts: all
+   strategy: debug
+
+   handlers:
+     - name: Restart SSH
+       service:
+         name: ssh
+         state: restarted
+
+     - name: root password changed
+       debug:
+         msg: "root password changed. Old Password won't work when you rerun the Playbook. New root password is same as new user passowrd."
+
+     - name: root SSH disabled
+       debug:
+         msg: "root SSH disabled."
+
+   tasks:
+     - name: Include variables
+       include_vars:
+         file: vars_newserver.yml
+
+     - name: Change root password
+       user:
+         name: root
+         password: "{{ user_passwd_crypt }}"
+         update_password: always
+       notify: root password changed
+
+     - name: Create user account
+       user:
+         name: "{{ user_name }}"
+         password: "{{ user_passwd_crypt }}"
+         update_password: always
+
+     - name: Add user keys
+       authorized_key:
+         user: "{{ user_name }}"
+         state: present
+         key: "{{ lookup('file', item) }}"
+       with_items: "{{ user_public_keys }}"
+     
+     - name: Add user in /etc/sudoers
+       lineinfile:
+         dest: /etc/sudoers
+         regexp: "{{ user_name }} ALL"
+         state: present
+         line: "{{ user_name }} ALL=(ALL) ALL"
+
+     - name: apt update & upgrade
+       apt:
+         update_cache: yes
+         cache_valid_time: 3600
+         upgrade: safe
+         
+     - name: Change SSH port
+       lineinfile:
+         dest: /etc/ssh/sshd_config
+         regexp: '^Port\s'
+         line: "Port {{ ssh_port_to_use }}"
+       # notify: Restart SSH
+
+     - name: Disallow root SSH
+       lineinfile:
+         dest: /etc/ssh/sshd_config
+         regexp: "^PermitRootLogin"
+         line: "PermitRootLogin no"
+         state: present
+       notify: root SSH disabled
+
+     - name: Disallow passwd auth
+       lineinfile:
+         dest: /etc/ssh/sshd_config
+         regexp: "^PasswordAuthentication"
+         line: "PasswordAuthentication no"
+         state: present
+       # notify: Restart SSH
+       

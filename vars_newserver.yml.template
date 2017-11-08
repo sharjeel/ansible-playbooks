@@ -1,0 +1,12 @@
+---
+user_name: sharjeel
+user_public_keys:
+ - ~/.ssh/id_ed25519.pub
+
+packages:
+ - ufw
+ - fail2ban
+ - unattended-upgrades
+ - logwatch
+
+ssh_port_to_use: xxxxx
