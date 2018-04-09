@@ -6,6 +6,12 @@ if [[ ! -e vars_newserver.yml ]]; then
     exit 1;
 fi
 
+if [[ ! -e ~/.ssh/id_rsa ]]; then
+    echo "Please enter the location of your private key for connecting to the new server"
+    read ssh_key_location
+else
+    ssh_key_location=~/.ssh/id_rsa
+fi
 
 # We can assume that root is setup with public keys
 ## echo "Enter server's root password: "
@@ -21,4 +27,6 @@ user_passwd_crypt=$(openssl passwd -salt SomeSaltButNoPepper -1 $user_passwd)
 
 ssh root@${serverip} 'apt-get -y install python'
 
-ansible-playbook -u root -i $serverip, newserver.yml --extra-vars "root_password=$root_passwd user_passwd_crypt=$user_passwd_crypt"
+ansible-playbook -u root --private-key=$ssh_key_location \
+		 -i $serverip, newserver.yml \
+		 --extra-vars "root_password=$root_passwd user_passwd_crypt=$user_passwd_crypt"
