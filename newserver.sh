@@ -25,7 +25,13 @@ read serverip
 
 user_passwd_crypt=$(openssl passwd -salt SomeSaltButNoPepper -1 $user_passwd)
 
-ssh root@${serverip} 'apt-get -y install python'
+if type sshagent 2>/dev/null | grep function; then
+    sshagent
+else
+    ssh-agent
+fi
+
+ssh -i $ssh_key_location root@${serverip} 'apt-get -y install python aptitude'
 
 ansible-playbook -u root --private-key=$ssh_key_location \
 		 -i $serverip, newserver.yml \

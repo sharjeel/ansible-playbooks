@@ -6,7 +6,7 @@
    with_items:
     - git
     - zsh
-    - emacs24
+    - emacs
     - py27-pip
     - ack
     - tmux

@@ -7,7 +7,7 @@
     - git
     - zsh
     - git-core
-    - emacs24
+    - emacs
     - python-pip
     - python-dev
     - ack-grep

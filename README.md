@@ -15,4 +15,4 @@ The other playbook `ubuntu.yml` is for servers.
 
 ### Quick installation
 
-	curl -L https://github.com/sharjeel/ansible-playbooks/raw/master/userapps.sh | sudo sh
+	curl -L https://github.com/sharjeel/ansible-playbooks/raw/master/userapps.sh | sh
