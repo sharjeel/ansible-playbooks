@@ -6,11 +6,13 @@ if [[ ! -e vars_newserver.yml ]]; then
     exit 1;
 fi
 
-if [[ ! -e ~/.ssh/id_rsa ]]; then
-    echo "Please enter the location of your private key for connecting to the new server"
-    read ssh_key_location
-else
-    ssh_key_location=~/.ssh/id_rsa
+if [[ -z $ssh_key_location ]]; then
+    if [[ ! -e ~/.ssh/id_rsa ]]; then
+	echo "Please enter the location of your private key for connecting to the new server"
+	read ssh_key_location
+    else
+	ssh_key_location=~/.ssh/id_rsa
+    fi
 fi
 
 # We can assume that root is setup with public keys
@@ -20,8 +22,11 @@ fi
 echo "Enter new password to set for user as well as root: "
 read -s user_passwd
 # TODO: Add password confirmation logic + password size logic
-echo "Enter server's IP address: "
-read serverip
+
+if [[ -z $serverip ]]; then
+    echo "Enter server's IP address: "
+    read serverip
+fi
 
 user_passwd_crypt=$(openssl passwd -salt SomeSaltButNoPepper -1 $user_passwd)
 
@@ -31,8 +36,14 @@ else
     ssh-agent
 fi
 
-ssh -i $ssh_key_location root@${serverip} 'apt-get -y install python aptitude'
+if [[ -z $isbsd ]]; then
+    ssh -i $ssh_key_location root@${serverip} 'apt-get -y install python aptitude'
+    ansible_python_interpreter=/usr/bin/python
+else
+    ssh -i $ssh_key_location root@${serverip} 'pkg update && pkg install -y python27'
+    ansible_python_interpreter=/usr/local/bin/python2
+fi
 
 ansible-playbook -u root --private-key=$ssh_key_location \
 		 -i $serverip, newserver.yml \
-		 --extra-vars "root_password=$root_passwd user_passwd_crypt=$user_passwd_crypt"
+		 --extra-vars "ansible_python_interpreter=$ansible_python_interpreter user_passwd_crypt=$user_passwd_crypt"

@@ -50,11 +50,12 @@
          line: "{{ user_name }} ALL=(ALL) ALL"
 
      - name: apt update & upgrade
+       when: ansible_os_family != "FreeBSD"
        apt:
          update_cache: yes
          cache_valid_time: 3600
          upgrade: safe
-         
+
      - name: Change SSH port
        lineinfile:
          dest: /etc/ssh/sshd_config
