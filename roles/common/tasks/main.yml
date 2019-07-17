@@ -24,6 +24,7 @@
    become: true
    pip: name={{ item }} state=latest
    tags: [pythonpackages,utilapps]
+   ignore_errors: yes
    with_items:
     - requests
     - httpie
@@ -39,15 +40,14 @@
    pip: name=ipython state=present version=5.4
    tags: [pythonpackages,utilapps]
 
- - name: Check-out oh-my-zsh 
+ - name: Check-out prezto
    become: false
-   git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=~/.oh-my-zsh update=yes
-   notify: ohmyzsh copy rc
-   tags: [zsh,zshaddon,ohmyzsh]
+   git: repo=https://github.com/sorin-ionescu/prezto.git dest=~/.zprezto update=yes
+   tags: [zsh,zshaddon,prezto]
 
  - name: Install zsh-syntaxhighlight
    become: false
-   git: repo=git://github.com/zsh-users/zsh-syntax-highlighting.git dest=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+   git: repo=git://github.com/zsh-users/zsh-syntax-highlighting.git dest=~/.zsh-syntax-highlighting
    tags: [zsh,zshaddon]
    
  - name: Install zsh-autosuggestions
@@ -55,12 +55,6 @@
    git: repo=https://github.com/tarruda/zsh-autosuggestions dest=~/.zsh-autosuggestions update=yes
    tags: [zsh,zshaddon]
 
- - name: Enable zsh-autusuggestion plugin
-   become: false
-   lineinfile: dest=~/.zshrc state=present create=yes insertbefore='source.*oh-my-zsh\.sh'
-                  regexp='^plugins=\(.*\)' line="plugins=(git extract zsh-syntax-highlighting)"
-   tags: [zsh,zshaddon]
-   
  - name: Create temp and bin directories in home
    become: false
    shell: mkdir -p ~/tmp/ ~/bin/
@@ -78,7 +72,11 @@
 
  - name: Checkout personalized dotfiles
    become: false
-   git: repo=https://github.com/sharjeel/dotfiles.git dest=~/.personalconfig/ update=yes
+   git:
+     repo: https://github.com/sharjeel/dotfiles.git 
+     dest: ~/.personalconfig/
+     update: no
+     force: no
    notify:
         setup dotfiles
    tags: [persconf]

@@ -1,12 +1,9 @@
 ---
- - name: OSX specific packages
-   macports: name={{ item }} state=present 
-   with_items:
-    - zsh
-    - emacs
-    - ack
-    - tmux
-   tags: [uitlapps, darwin]
+ - name: OSX Specific packages via homebrew
+   homebrew:
+     name: emacs,ack,tmux
+     state: present 
+   tags: [utilapps, darwin]
    when: ansible_os_family == "Darwin"
 
  - name: Set ZSH as default shell

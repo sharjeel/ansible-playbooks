@@ -1,19 +1,5 @@
 
 ---
- - name: ohmyzsh copy rc
-   shell: cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-   notify: ohmyzsh add sources
-
- - name: ohmyzsh add sources
-   become: false
-   lineinfile: dest=~/.zshrc state=present create=yes insertafter='EOF'
-               regexp='^source.*oh-my-zsh\.sh' line="source $ZSH/oh-my-zsh.sh"
-
- - name: ensure ohmyzsh
-   become: false
-   lineinfile: dest=~/.zsxhrc state=present create=yes insertbefore='BOF'
-               regexp='^ZSH=.*/.oh-my-zsh' line="ZSH=$HOME/.oh-my-zsh"
-
  - name: setup dotfiles
    become: false
    shell: cd ~/.personalconfig/ && ansible-playbook -i hosts ansible-dotfiles.yml
