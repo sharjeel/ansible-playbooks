@@ -11,29 +11,31 @@
  - include: freebsd.yml
    when: ansible_os_family == "FreeBSD"
 
- - name: try ansible/pip updates
-   become: true
-   pip: name={{ item }} state=latest
-   tags: [pip,ansible]
-   ignore_errors: yes
-   with_items:
-     - pip
-     - ansible
+ # - name: try ansible/pip updates
+ #   become: true
+ #   pip:
+ #     name:
+ #     - pip
+ #     - ansible
+ #     state: latest
+ #   tags: [pip,ansible]
+ #   ignore_errors: yes
 
  - name: install/update python packages
    become: true
-   pip: name={{ item }} state=latest
+   pip:
+     name:
+     - requests
+     - httpie
+     - pyzmq
+     - zmq
+     - jsonschema
+     - tornado
+     - virtualenv
+     - virtualenvwrapper
+     state: latest
    tags: [pythonpackages,utilapps]
    ignore_errors: yes
-   with_items:
-    - requests
-    - httpie
-    - pyzmq
-    - zmq
-    - jsonschema
-    - tornado
-    - virtualenv
-    - virtualenvwrapper
 
  - name: Install IPython LTS which supports Python 2.7
    become: true
@@ -55,10 +57,20 @@
    git: repo=https://github.com/tarruda/zsh-autosuggestions dest=~/.zsh-autosuggestions update=yes
    tags: [zsh,zshaddon]
 
- - name: Create temp and bin directories in home
-   become: false
-   shell: mkdir -p ~/tmp/ ~/bin/
-   tags: [persconf]
+ - name: Create temp directory in home
+   ansible.builtin.file:
+     become: false
+     path: ~/tmp
+     state: directory
+     tags: [persconf]
+
+ - name: Create bin directory in home
+   ansible.builtin.file:
+     become: false
+     path: ~/bin
+     state: directory
+     tags: [persconf]
+
 
  - name: Checkout bashmarks
    become: false

@@ -1,38 +1,40 @@
 ---
  - name: Ubuntu specific packages
-   apt: pkg={{ item }} state=latest
+   apt:
+     pkg:
+     - git
+     - zsh
+     - git-core
+     - emacs
+     - python3-pip
+     - python3-dev
+     - ack-grep
+     - build-essential
+     - tmux
+     - guake
+     - colordiff
+     - clipit
+     - htop
+     state: latest
    become: true
    tags: [utilapps, debian]
-   with_items:
-    - git
-    - zsh
-    - git-core
-    - emacs
-    - python-pip
-    - python-dev
-    - ack-grep
-    - build-essential
-    - tmux
-    - guake
-    - colordiff
-    - clipit
-    - htop
 
  - name: Ubuntu specific optional packages
-   apt: pkg={{ item }} state=latest
+   ignore_errors: yes
+   apt:
+     pkg: 
+     - libffi-dev
+     - libssl-dev
+     - libxml2-dev
+     - libxslt1-dev
+     - libjpeg8-dev
+     - zlib1g-dev
+     state: latest
    become: true
    tags: [utilapps, debian]
-   ignore_errors: yes
-   with_items:
-    - libffi-dev
-    - libssl-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - libjpeg8-dev
-    - zlib1g-dev
 
  - name: Set zsh as default shell
    become: true
-   user: name={{ ansible_ssh_user }} shell=/bin/zsh
+   user: name={{ansible_env.USER}} shell=/bin/zsh
    tags: [zsh, debian]
 

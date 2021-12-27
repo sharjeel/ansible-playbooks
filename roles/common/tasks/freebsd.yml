@@ -1,19 +1,20 @@
 ---
  - name: FreeBSD specific packages
-   pkgng: name={{ item }} state=present
+   pkgng:
+     name:
+     - git
+     - zsh
+     - emacs
+     - py27-pip
+     - ack
+     - tmux
+     - guake
+     - yakuake
+     - colordiff
+     - clipit     
+     state: present
    become: true
    tags: [utilapps, pcbsd]
-   with_items:
-    - git
-    - zsh
-    - emacs
-    - py27-pip
-    - ack
-    - tmux
-    - guake
-    - yakuake
-    - colordiff
-    - clipit
    when: ansible_os_family == "FreeBSD"
 
  - name: Set zsh as default shell
